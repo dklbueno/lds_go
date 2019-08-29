@@ -1,0 +1,39 @@
+version: "2"
+
+services:
+  microservice:
+    container_name: lds
+    image: gcr.io/movidacloud-development/lds:devel
+    environment:
+      - PATH=$PATH:/usr/lib/go/bin
+      - GOPATH=/usr
+      - mysql=true
+      - mysql_db_host=10.220.1.7
+      - mysql_db_port=3306
+      - mysql_db_name=movida
+      - mysql_db_user=movidarac
+      - mysql_db_pass='jG6CCp2@Fa3Vek8t[)YPdXgG'
+      - mysql_db_table=metrics
+      - mysql_db_column=info
+      - postgres=false
+      - postgres_db_host=127.0.0.1
+      - postgres_db_port=5432
+      - postgres_db_name=lds
+      - postgres_db_user=postgres
+      - postgres_db_pass=123456
+      - postgres_db_table=metrics
+      - postgres_db_column=info   
+      - newrelic=false
+      - newrelic_entity=OTA_Metrics
+      - newrelic_app_name=LDS:Staging
+      - newrelic_license_key=2f09561f5089d3ed2218d2dfcb0bf0335c692e7e
+      - channel_cap=100
+      - qtd_worker=10
+    ports:
+      - "8080:8080"    
+    volumes:
+      - /home/daniel/go/src/lds:/usr/src/lds
+      - /home/daniel/go/src/github.com:/usr/src/github.com
+    working_dir: /usr/src/lds/
+    command: go run main.go
+      
